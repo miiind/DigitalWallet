@@ -7,21 +7,44 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Digital Wallet
+ * UserPool.java
+ * This class creates user network and deals with file input/output
+ * 
+ * @author Lily
+ */
 public class UserPool {
 
 	private Map<String, User> userPool;
 	private static final String TRUSTED = "trusted";
 	private static final String UNVERIFIED = "unverified";
 
+	/**
+	 * Constructor that initializes user network from an existing user pool,
+	 * save the effort of processing past data repeatedly
+	 * 
+	 * @param pool: an existing user network
+	 */
     public UserPool(UserPool pool) {
         this.userPool = new HashMap<>(pool.getPool());
     }
     
+    /**
+     * Constructor that 
+     * 
+     * @param fileName: path to the input data file
+     */
 	public UserPool(String fileName) {
 		userPool = new HashMap<String, User>();
 		init(fileName);
 	}
 	
+	/**
+	 * Build initial user network from input file
+	 * 
+	 * @param fileName: path to the input data file
+	 */
 	public void init(String fileName) {
 		try {
 			File file = new File(fileName);
@@ -30,11 +53,10 @@ public class UserPool {
 			
 			String line = br.readLine(); // ignore the header line
 			line = br.readLine();
-			int count = 0;
 			while (line != null) {
-				//System.out.println(count + " " + line);
+				
 				String[] records = line.split(",");
-				// ignore records that are not complete
+				// ignore records that are incomplete or have wrong format
 				if (records.length < 4) {
 					line = br.readLine();
 					continue;
@@ -51,12 +73,10 @@ public class UserPool {
 					userPool.put(user2, u2);
 				}
 				getUser(user1).addFriend(getUser(user2));
-				getUser(user2).addFriend(getUser(user1));			
-				count++;
-				line = br.readLine();
-				//System.out.println(userPool.keySet());
+				getUser(user2).addFriend(getUser(user1));						
+				line = br.readLine();		
 			}
-			//System.out.println(count);
+
 			br.close();
 			
 		} catch(IOException e) {
@@ -64,14 +84,31 @@ public class UserPool {
 		}
 	}
 	
+	/**
+	 * This method gets user network
+	 */
     public Map<String, User> getPool(){
         return this.userPool;
     }
     
+    /**
+     * This method finds the user with given id
+     * 
+     * @param key: user ID
+     * @return user
+     */
 	public User getUser(String key) {
 		return userPool.get(key);
 	}
 	
+	/**
+	 * This method determines possibility of fraud in transactions,
+	 * and triggers warning or verified info in output file
+	 * 
+	 * @param inputFile: path to transaction file that needs to be analyzed
+	 * @param outputFile: path to output file 
+	 * @param maxDegree: the max degree of friend can be trusted in network
+	 */
 	public void writeFile(String inputFile, String outputFile, int maxDegree) {
 		File input = new File(inputFile);
 		File output = new File(outputFile);

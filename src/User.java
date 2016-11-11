@@ -5,6 +5,14 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * Digital Wallet
+ * User.java
+ * This class creates unique object for each PayMo user
+ * Each user has a field of id and a set of friends
+ * 
+ * @author Lily
+ */
 public class User {
 
 	private String userID;
@@ -12,7 +20,8 @@ public class User {
 	
 	/**
 	 * Constructor for User class
-	 * @param id ID of the User
+	 * 
+	 * @param id: the User ID
 	 */
 	public User(String id){
 		this.userID = id;
@@ -20,9 +29,10 @@ public class User {
 	}
 	
 	/**
-	 * Method to determine whether the payment with user b is trusted
-	 * @param user Another user to make transaction with
-	 * @param maxDegree Maximum level of friends network
+	 * Method to implements algorithm to determine whether the payment with user b is trusted
+	 * 
+	 * @param user: Another user to make transaction with
+	 * @param maxDegree: Maximum level of friends network
 	 * @return True if the payment is trusted, false if the payment is unverified
 	 */
 	public boolean isTrusted(User user, int maxDegree){
@@ -64,13 +74,15 @@ public class User {
 		return false;
 	}
 	
+	/**
+	 * This method enables modify user ID
+	 */
 	public void setID(String id){
 		this.userID = id;
 	}
 	
 	/**
 	 * Add user to friends set if it is not already present
-	 * @param user
 	 */
 	public void addFriend(User user) {
 		if(this.getID().equals(user.getID())) {
@@ -79,10 +91,16 @@ public class User {
 		this.friends.add(user);
 	}
 	
+	/**
+	 * This method get user ID
+	 */
 	public String getID(){
 		return this.userID;
 	}
 	
+	/**
+	 * This method get set of friends for a perticular user
+	 */
 	public Set<User> getFriends() {
 		return this.friends;
 	}

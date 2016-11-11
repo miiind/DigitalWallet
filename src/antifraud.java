@@ -3,10 +3,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-// example of program that detects suspicious transactions
-// fraud detection algorithm
+/**
+ * Digital Wallet
+ * antifraud.java
+ * This class controls the task of detecting unsafe transactions between PayMo users
+ * 
+ * @author Lily
+ * @version 1.0 11/10/16
+ */
 public class  antifraud{
-	
+
 	public static void main(String[] args) {
 		String initpath = "./paymo_input/batch_payment.txt";
 		String streampath = "./paymo_input/stream_payment.txt";
@@ -19,5 +25,6 @@ public class  antifraud{
 		userPool1.writeFile(streampath, outputpath1, 1);
         userPool2.writeFile(streampath, outputpath2, 2);
         userPool3.writeFile(streampath, outputpath3, 4);
+        
 	}
 }
